@@ -6,7 +6,6 @@ import { pokemonsService } from "@/services";
 import { getPokemonById } from "@/redux/pokemons/thunks";
 
 const usePokemonCard = ({ url }: Pick<IPokemonCard, "url">) => {
-  const dispatch = useDispatch();
   const [pokemon, setPokemon] = useState<IPokemonResponse | null>(null);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
 const styles = {
+  container: { padding: 20 },
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
-  section: {
-  }
+  title: {
+    textAlign: "center",
+  },
 } as const;
 
 export default styles;

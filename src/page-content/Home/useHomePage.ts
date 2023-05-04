@@ -11,12 +11,14 @@ const useHomePage = () => {
   );
 
   const loadMore = useCallback(() => {
-    dispatch(
-      getPokemons(
-        nextUrl ? nextUrl : "https://pokeapi.co/api/v2/pokemon/?limit=12"
-      )
-    ).unwrap();
+    if (nextUrl) {
+      dispatch(getPokemons(nextUrl)).unwrap();
+    }
   }, [dispatch, nextUrl]);
+
+  const loadPokemons = useCallback(() => {
+    dispatch(getPokemons()).unwrap();
+  }, [dispatch]);
 
   const handleSelectPokemon = useCallback(
     (url: string) => {
@@ -26,17 +28,17 @@ const useHomePage = () => {
   );
 
   useEffect(() => {
-    loadMore();
+    loadPokemons();
     return () => {
       dispatch(resetState());
     };
-  }, [dispatch, loadMore]);
+  }, [dispatch, loadPokemons]);
 
   return {
     pokemons,
+    selectedPokemon,
     loadMore,
     isLoading,
-    selectedPokemon,
     handleSelectPokemon,
   };
 };

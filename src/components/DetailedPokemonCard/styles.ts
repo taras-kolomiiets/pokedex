@@ -1,10 +1,9 @@
 const styles = {
-  root: {
-    display: "flex",
-    alignItems: "center",
+  image: {
+    objectFit: "contain",
   },
-  section: {
-    backgroundColor: "green",
+  title: {
+    textAlign: "center",
   },
 } as const;
 
