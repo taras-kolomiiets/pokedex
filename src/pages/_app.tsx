@@ -1,23 +1,25 @@
-import { CacheProvider } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import { useMemo } from 'react';
-import { Provider } from 'react-redux';
+import { CacheProvider } from "@emotion/react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import { useMemo } from "react";
+import { Provider } from "react-redux";
 
-import { theme, createEmotionCache } from '@/constants';
-import { initializeStore } from '@/redux/store';
-import { MyAppProps } from '@/types';
+import { theme, createEmotionCache } from "@/constants";
+import { initializeStore } from "@/redux/store";
+import { MyAppProps } from "@/types";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps, emotionCache }: MyAppProps) {
-  const styleCache = useMemo(() => emotionCache || createEmotionCache(), [emotionCache]);
+  const styleCache = useMemo(
+    () => emotionCache || createEmotionCache(),
+    [emotionCache]
+  );
   const store = useMemo(() => {
-    return initializeStore(pageProps.internal?.initialReduxState);
-  }, [pageProps.internal?.initialReduxState]);
+    return initializeStore();
+  }, []);
 
   return (
     <Provider store={store}>
@@ -32,4 +34,3 @@ function MyApp({ Component, pageProps, emotionCache }: MyAppProps) {
   );
 }
 export default MyApp;
-

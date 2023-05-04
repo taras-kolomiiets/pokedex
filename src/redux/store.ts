@@ -1,34 +1,28 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { isSSR } from '@/utils';
+import { isSSR } from "@/utils";
 
-import { pokemonsReduser } from './pokemons';
+import { pokemonsReduser } from "./pokemons";
 
-import type { EnhancedStore } from '@reduxjs/toolkit';
+import type { EnhancedStore } from "@reduxjs/toolkit";
 
 let store: EnhancedStore;
 
-const createStore = <T>(preloadedState?: T) =>
+const createStore = () =>
   configureStore({
     reducer: {
       pokemons: pokemonsReduser,
     },
-    preloadedState,
   });
 
-export const initializeStore = (preloadedState?: RootState): Store => {
+export const initializeStore = (): Store => {
   // Create new store if there is no existing one
-  let newStore = store ?? createStore(preloadedState);
+  let newStore = store ?? createStore();
 
-  // If we have both store and preloaded state, merge them
-  if (preloadedState && store) {
-    newStore = createStore({ ...store.getState(), ...preloadedState });
-
-    // Assign store only on client
-    // keep it undefined on backend
-    if (!isSSR()) {
-      store = newStore;
-    }
+  // Assign store only on client
+  // keep it undefined on backend
+  if (!isSSR()) {
+    store = newStore;
   }
 
   // For SSG and SSR always create a new store
@@ -46,5 +40,5 @@ export const initializeStore = (preloadedState?: RootState): Store => {
 };
 
 export type Store = ReturnType<typeof createStore>;
-export type RootState = ReturnType<Store['getState']>;
-export type AppDispatch = Store['dispatch'];
+export type RootState = ReturnType<Store["getState"]>;
+export type AppDispatch = Store["dispatch"];
