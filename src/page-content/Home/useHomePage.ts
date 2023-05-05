@@ -1,8 +1,13 @@
 import { useDispatch, useSelector } from "@/hooks";
 import { pokemonsStateSelector } from "@/redux/pokemons/selectors";
-import { resetState } from "@/redux/pokemons/slice";
+import {
+  resetPokemonType,
+  resetState,
+  setPokemonType,
+} from "@/redux/pokemons/slice";
 import { getPokemonById, getPokemons } from "@/redux/pokemons/thunks";
-import { useCallback, useEffect } from "react";
+import { SelectChangeEvent } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 
 const useHomePage = () => {
   const dispatch = useDispatch();
@@ -10,9 +15,21 @@ const useHomePage = () => {
     pokemonsStateSelector
   );
 
+  const [type, setType] = useState("");
+
+  const handleSelectType = useCallback(
+    (event: SelectChangeEvent) => {
+      setType(event.target.value);
+      dispatch(setPokemonType(event.target.value));
+    },
+    [dispatch]
+  );
+
   const loadMore = useCallback(() => {
     if (nextUrl) {
       dispatch(getPokemons(nextUrl)).unwrap();
+      dispatch(resetPokemonType());
+      setType("");
     }
   }, [dispatch, nextUrl]);
 
@@ -40,6 +57,8 @@ const useHomePage = () => {
     loadMore,
     isLoading,
     handleSelectPokemon,
+    type,
+    handleSelectType,
   };
 };
 

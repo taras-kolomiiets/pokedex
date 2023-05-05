@@ -13,11 +13,9 @@ import { Chip } from "@/components";
 import { PokemonType } from "@/constants/enums";
 
 const PokemonCard = ({ url, handleSelectPokemon }: IPokemonCard) => {
-  const { pokemon } = usePokemonCard({ url });
+  const { pokemon, type } = usePokemonCard({ url });
 
-  console.log(pokemon);
-
-  return (
+  return !type || pokemon?.types.find((item) => item.type.name === type) ? (
     <Card>
       <CardActionArea onClick={() => handleSelectPokemon(url)}>
         <CardMedia
@@ -29,7 +27,7 @@ const PokemonCard = ({ url, handleSelectPokemon }: IPokemonCard) => {
           <Typography gutterBottom variant="h4" sx={styles.title}>
             {pokemon?.name}
           </Typography>
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={2}>
             {pokemon?.types.map(({ type }) => (
               <Chip
                 label={type.name}
@@ -41,7 +39,7 @@ const PokemonCard = ({ url, handleSelectPokemon }: IPokemonCard) => {
         </CardContent>
       </CardActionArea>
     </Card>
-  );
+  ) : null;
 };
 
 export default PokemonCard;

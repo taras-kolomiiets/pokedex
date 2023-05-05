@@ -22,7 +22,6 @@ const DetailedPokemonCard = ({ selectedPokemon }: IDetailedPokemonCard) => {
       <CardMedia
         sx={styles.image}
         component="img"
-        height="140"
         image={selectedPokemon?.sprites.front_default}
       />
       <CardContent>

@@ -1,3 +1,4 @@
+import { PokemonType } from "@/constants/enums";
 import {
   IPokemonResponse,
   IPokemonShortResponse,
@@ -8,4 +9,5 @@ export default interface IPokemonsState {
   nextUrl: string | null;
   selectedPokemon: IPokemonResponse | null;
   isLoading: boolean;
+  type: PokemonType | null;
 }

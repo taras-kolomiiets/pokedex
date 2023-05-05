@@ -9,6 +9,7 @@ const initialState: IPokemonsState = {
   nextUrl: null,
   selectedPokemon: null,
   isLoading: false,
+  type: null,
 };
 
 export const pokemonsSlice = createSlice({
@@ -21,6 +22,12 @@ export const pokemonsSlice = createSlice({
     },
     resetSelectedPokemon: (state) => {
       state.selectedPokemon = initialState.selectedPokemon;
+    },
+    setPokemonType: (state, { payload }) => {
+      state.type = payload;
+    },
+    resetPokemonType: (state) => {
+      state.type = null;
     },
   },
   extraReducers: (builder) => {
@@ -47,10 +54,7 @@ export const pokemonsSlice = createSlice({
 
     builder.addCase(getPokemonById.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-
-      if (payload) {
-        state.selectedPokemon = payload;
-      }
+      state.selectedPokemon = payload;
     });
 
     builder.addCase(getPokemonById.rejected, (state) => {
@@ -59,7 +63,12 @@ export const pokemonsSlice = createSlice({
   },
 });
 
-export const { resetState, resetPokemons, resetSelectedPokemon } =
-  pokemonsSlice.actions;
+export const {
+  resetState,
+  resetPokemons,
+  resetSelectedPokemon,
+  setPokemonType,
+  resetPokemonType,
+} = pokemonsSlice.actions;
 
 export default pokemonsSlice.reducer;

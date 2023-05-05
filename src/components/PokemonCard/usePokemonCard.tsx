@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPokemonCard } from "./types";
-import { useDispatch } from "@/hooks";
 import { IPokemonResponse } from "@/data-transfer/responses";
 import { pokemonsService } from "@/services";
-import { getPokemonById } from "@/redux/pokemons/thunks";
+import { useSelector } from "@/hooks";
+import { pokemonsStateSelector } from "@/redux/pokemons/selectors";
 
 const usePokemonCard = ({ url }: Pick<IPokemonCard, "url">) => {
   const [pokemon, setPokemon] = useState<IPokemonResponse | null>(null);
+  const { type } = useSelector(pokemonsStateSelector);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,7 +18,7 @@ const usePokemonCard = ({ url }: Pick<IPokemonCard, "url">) => {
     fetchData();
   }, [url]);
 
-  return { pokemon };
+  return { pokemon, type };
 };
 
 export default usePokemonCard;

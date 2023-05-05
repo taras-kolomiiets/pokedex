@@ -2,7 +2,7 @@ import { Box, Grid, Typography, Button, CircularProgress } from "@mui/material";
 
 import styles from "./styles";
 import useHomePage from "./useHomePage";
-import { DetailedPokemonCard, PokemonCard } from "@/components";
+import { DetailedPokemonCard, PokemonCard, Select } from "@/components";
 
 const HomePage = () => {
   const {
@@ -11,10 +11,16 @@ const HomePage = () => {
     loadMore,
     handleSelectPokemon,
     isLoading,
+    type,
+    handleSelectType,
   } = useHomePage();
 
   if (isLoading) {
-    return <CircularProgress />;
+    return (
+      <Box sx={styles.loader}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -22,12 +28,18 @@ const HomePage = () => {
       <Typography variant="h1" sx={styles.title}>
         Pokedex
       </Typography>
-      <Grid container spacing={10} sx={styles.root}>
-        <Grid item xs={8}>
+      <Select
+        value={type}
+        onChange={handleSelectType}
+        label="Type"
+        sx={styles.select}
+      />
+      <Grid container spacing={20} sx={styles.root}>
+        <Grid item xs={12} md={8}>
           <Grid
             container
-            rowSpacing={2}
-            columnSpacing={{ xs: 2, sm: 4, md: 6 }}
+            rowSpacing={12}
+            columnSpacing={{ xs: 2, sm: 4, md: 12 }}
           >
             {pokemons &&
               pokemons.map(({ name, url }) => (
@@ -40,11 +52,16 @@ const HomePage = () => {
                 </Grid>
               ))}
           </Grid>
-          <Button variant="contained" fullWidth onClick={loadMore}>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={loadMore}
+            sx={styles.btn}
+          >
             Load more
           </Button>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           {selectedPokemon ? (
             <DetailedPokemonCard selectedPokemon={selectedPokemon} />
           ) : null}
